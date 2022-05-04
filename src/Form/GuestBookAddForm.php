@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\MessageCommand;
+use Drupal\file\Entity\File;
 
 class GuestBookAddForm extends FormBase
 {
@@ -117,6 +118,43 @@ class GuestBookAddForm extends FormBase
                 ['type' => 'error']
             ));
         } else {
+            $fields['name'] = $form_state->getValue('name');
+            $fields['email'] = $form_state->getValue('name');
+            $fields['phone'] = $form_state->getValue('phone_number');
+            $fields['message'] = $form_state->getValue('message');
+
+            $now = \Drupal::time()->getCurrentTime();
+            $fields['date'] = \Drupal::service('date.formatter')->format($now, 'custom', 'Y/m/d H:i:s');
+
+            $avatar = $form_state->getValue('avatar');
+            $image = $form_state->getValue('image');
+
+            if ($avatar == null) {
+                $fields['avatar'] = '/modules/custom/guest_book/images/default-avatar.png';
+            } else {
+                $file = File::load($avatar[0]);
+                $file->setPermanent();
+                $file->save();
+                $uri = $file->getFileUri();
+                $url = file_create_url($uri);
+                $fields['avatar'] = $url;
+            }
+
+            if ($image == null) {
+                $fields['image'] = null;
+            } else {
+                $file = File::load($image[0]);
+                $file->setPermanent();
+                $file->save();
+                $uri = $file->getFileUri();
+                $url = file_create_url($uri);
+                $fields['image'] = $url;
+            }
+
+
+            $connection = \Drupal::database();
+            $connection->insert('guest_book')->fields($fields)->execute();
+
             $response->addCommand(new MessageCommand(
                 $this->t('All good!'),
                 null,

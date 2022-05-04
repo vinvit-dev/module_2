@@ -28,6 +28,12 @@ function guest_book_schema() {
                     'length' => 20,
                     'not null' => TRUE,
                 ),
+                'message' => array(
+                    'description' => 'Feedback message.',
+                    'type' => 'varchar',
+                    'length' => 1024,
+                    'not null' => TRUE,
+                ),
                 'avatar' => array(
                     'description' => 'User avatar.',
                     'type' => 'varchar',
