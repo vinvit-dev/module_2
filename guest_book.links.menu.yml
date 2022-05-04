@@ -1,0 +1,7 @@
+guest_book.demo:
+  title: 'Guest book'
+  description: 'Guest book'
+  parent: main
+  menu_name: main
+  route_name: guest_book.main
+  weight: 100

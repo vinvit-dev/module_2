@@ -1,0 +1,13 @@
+<?php
+
+function guest_book_theme($existing, $type, $path)
+{
+    $themes['guest-book'] = [
+        'variables' => [
+            'markup' => null,
+            'add_form' => [],
+        ],
+    ];
+
+    return $themes;
+}

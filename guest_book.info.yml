@@ -1,0 +1,6 @@
+name: Guest book
+description: "This module creates a page with a list of comments and a form where users can add your comment"
+
+type: module
+package: Custom
+core_version_requirement: ^8 || ^9

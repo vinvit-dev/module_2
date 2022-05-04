@@ -1,0 +1,52 @@
+<?php
+
+function guest_book_schema() {
+    $schema['guest_book'] = array(
+            'fields' => array(
+                'id' => array(
+                    'description' => 'The primary identifier for cat.',
+                    'type' => 'serial',
+                    'not null' => TRUE,
+                    'unsigned' => TRUE,
+                ),
+                'name' => array(
+                    'description' => 'Cat name.',
+                    'type' => 'varchar',
+                    'length' => 100,
+                    'not null' => TRUE,
+                    'default' => '',
+                ),
+                'email' => array(
+                    'description' => 'Email.',
+                    'type' => 'varchar',
+                    'length' => 255,
+                    'not null' => TRUE,
+                ),
+                'phone' => array(
+                    'description' => 'Phone number.',
+                    'type' => 'varchar',
+                    'length' => 20,
+                    'not null' => TRUE,
+                ),
+                'avatar' => array(
+                    'description' => 'User avatar.',
+                    'type' => 'varchar',
+                    'length' => 255,
+                    'not null' => TRUE,
+                ),
+                'image' => array(
+                    'description' => 'Feedback image.',
+                    'type' => 'varchar',
+                    'length' => 255,
+                ),
+                'date' => array(
+                    'description' => 'Publish date-time.',
+                    'type' => 'varchar',
+                    'length' => 255,
+                    'not null' => TRUE,
+                ),
+            ),
+            'primary key' => array('id'),
+    );
+    return $schema;
+}
