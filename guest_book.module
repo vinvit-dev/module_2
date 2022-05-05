@@ -1,13 +1,30 @@
 <?php
 
-function guest_book_theme($existing, $type, $path)
-{
-    $themes['guest-book'] = [
-        'variables' => [
-            'markup' => null,
-            'add_form' => [],
-        ],
-    ];
+/**
+ * @file
+ */
 
-    return $themes;
+/**
+ * @param $existing
+ * @param $type
+ * @param $path
+ * @return array
+ */
+function guest_book_theme($existing, $type, $path) {
+  $themes['guest-book'] = [
+    'variables' => [
+      'markup' => NULL,
+      'items' => [],
+      'add_form' => [],
+    ],
+  ];
+
+  return $themes;
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function guest_book_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'guest_book/guest_book';
 }

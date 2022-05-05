@@ -5,3 +5,20 @@ guest_book.main:
     _title: 'Guest book'
   requirements:
     _permission: 'access content'
+
+guest_book.delete:
+  path: '/guest-book/delete/{id}'
+  defaults:
+    _controller: '\Drupal\guest_book\Controller\GuestBookController::delete'
+  requirements:
+    _permission: 'access to edit guest_book data'
+    id: '^[0-9]+'
+
+guest_book.edit:
+  path: '/guest-book/edit/{id}'
+  defaults:
+    _controller: '\Drupal\guest_book\Controller\GuestBookController::edit'
+  requirements:
+    _permission: 'access to edit guest_book data'
+    id: '^[0-9]+'
+
