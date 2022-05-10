@@ -1,3 +1,7 @@
+
+.messages__wrapper .messages--error {
+    display: none;
+}
 .guest-book-form {
     display: flex;
     justify-content: space-between;
@@ -8,4 +12,33 @@
    .form-wrapper {
         width: 49%;
     }
+    .error-meessage {
+        color: red;
+        margin-bottom: 5px;
+
+    }
+    .form-item-message {
+        margin-bottom: 5px;
+    }
+    .messages--error {
+        background: transparent;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+    }
+    .messages {
+        &:last-child , &:first-child {
+            margin: 5px 0;
+        }
+    }
+    textarea {
+        height: 155px;
+        resize: none;
+    }
+    .form-submit:last-child {
+        margin-left: auto;
+    }
 }
+
+

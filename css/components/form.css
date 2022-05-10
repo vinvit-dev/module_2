@@ -1,3 +1,7 @@
+.messages__wrapper .messages--error {
+  display: none;
+}
+
 .guest-book-form {
   display: flex;
   justify-content: space-between;
@@ -8,6 +12,30 @@
 }
 .guest-book-form .form-wrapper {
   width: 49%;
+}
+.guest-book-form .error-meessage {
+  color: red;
+  margin-bottom: 5px;
+}
+.guest-book-form .form-item-message {
+  margin-bottom: 5px;
+}
+.guest-book-form .messages--error {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+.guest-book-form .messages:last-child, .guest-book-form .messages:first-child {
+  margin: 5px 0;
+}
+.guest-book-form textarea {
+  height: 155px;
+  resize: none;
+}
+.guest-book-form .form-submit:last-child {
+  margin-left: auto;
 }
 
 /*# sourceMappingURL=form.css.map */

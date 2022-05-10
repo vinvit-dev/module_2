@@ -7,4 +7,9 @@
   margin: 0;
 }
 
+div[aria-labelledby=ui-id-2] .guest-book-form {
+  padding: 0;
+  border: none;
+}
+
 /*# sourceMappingURL=modalDialog.css.map */

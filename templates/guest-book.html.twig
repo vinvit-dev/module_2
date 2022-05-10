@@ -4,6 +4,9 @@
 </section>
 
 <h1 class="feedback-title">Feedbacks list</h1>
+{% if not items %}
+    <p>Nothing here.</p>
+{% endif %}
 <section class="guest-book_feedback-list">
 
     {% for item in items %}

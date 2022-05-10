@@ -86,8 +86,8 @@ class GuestBookForm extends FormBase {
       '#upload_location' => 'public://guest_book/images',
       '#weight' => -1,
     ];
-    $form['first-col']['message'] = [
-      '#markup' => '<div id="error-message-edit" class="error-meessage">Error</div>',
+    $form['sec-col']['error-message'] = [
+      '#markup' => '<div id="error-message-edit" class="error-meessage"></div>',
     ];
     $form['sec-col']['submit'] = [
       '#type' => 'submit',
@@ -95,6 +95,7 @@ class GuestBookForm extends FormBase {
       '#ajax' => [
         'callback' => '::submitAjax',
       ],
+
     ];
     $form['id'] = [
       '#type' => 'hidden',
@@ -116,7 +117,7 @@ class GuestBookForm extends FormBase {
               || strlen($form_state->getValue('name')) == 0)) {
       $response->addCommand(new MessageCommand(
             $this->t('Invalid name!'),
-            NULL,
+          '#error-message-edit',
             ['type' => 'error']
         ));
     }
@@ -124,14 +125,14 @@ class GuestBookForm extends FormBase {
           || strlen($form_state->getValue('email')) == 0) {
       $response->addCommand(new MessageCommand(
             $this->t('Invalid email!'),
-            NULL,
+          '#error-message-edit',
             ['type' => 'error'],
         ));
     }
     elseif (preg_match('/[^-_@.\dZa-z]/', $form_state->getValue('email'))) {
       $response->addCommand(new MessageCommand(
             $this->t('In email allow only dash, underline and latin symbols!'),
-            NULL,
+          '#error-message-edit',
             ['type' => 'error'],
         ));
     }
@@ -139,14 +140,21 @@ class GuestBookForm extends FormBase {
           || strlen($form_state->getValue('email')) == 0) {
       $response->addCommand(new MessageCommand(
             $this->t('Invalid phone'),
-            NULL,
+          '#error-message-edit',
             ['type' => 'error'],
         ));
     }
     elseif (strlen($form_state->getValue('message')) === 0) {
       $response->addCommand(new MessageCommand(
             $this->t('Please write message!'),
-            NULL,
+          '#error-message-edit',
+            ['type' => 'error']
+        ));
+    }
+    elseif (strlen($form_state->getValue('message')) > 1023) {
+      $response->addCommand(new MessageCommand(
+            $this->t('Massage is too long!'),
+            '#error-message-edit',
             ['type' => 'error']
         ));
     }
@@ -187,7 +195,12 @@ class GuestBookForm extends FormBase {
             NULL,
             ['type' => 'status']
         ));
-      $url = Url::fromRoute("vinvit.main");
+      $response->addCommand(new MessageCommand(
+            '',
+            '#error-message-edit',
+            ['type' => 'status']
+        ));
+      $url = Url::fromRoute("guest_book.main");
       $response->addCommand(new RedirectCommand($url->toString()));
     }
     else {
@@ -231,7 +244,12 @@ class GuestBookForm extends FormBase {
 
       $response->addCommand(new MessageCommand(
             $this->t('All great!'),
-            NULL,
+          NULL,
+            ['type' => 'status']
+        ));
+      $response->addCommand(new MessageCommand(
+            '',
+            '#error-message-edit',
             ['type' => 'status']
         ));
     }
