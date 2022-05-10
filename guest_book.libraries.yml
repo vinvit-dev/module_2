@@ -2,8 +2,8 @@ guest_book:
   version: 1.x
   css:
     components:
-      css/components/form.css: {}
-      css/components/modalDialog.css: {}
-      css/components/feedback.css: {}
+      css/components/form.css: { }
+      css/components/modalDialog.css: { }
+      css/components/feedback.css: { }
   dependencies:
     - core/drupal.dialog.ajax

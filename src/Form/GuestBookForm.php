@@ -12,22 +12,22 @@ use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 
 /**
- *
+ * Class for main form in guest book module.
  */
 class GuestBookForm extends FormBase {
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function getFormId() {
     return 'guest_book_form';
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $val = NULL) {
-
+    // Containers. Make two columns layout form.
     $form['first-col'] = ['#type' => 'container'];
     $form['sec-col'] = ['#type' => 'container'];
 
@@ -69,6 +69,7 @@ class GuestBookForm extends FormBase {
     $form['first-col']['avatar'] = [
       '#type' => 'managed_file',
       '#title' => $this->t('Your photo:'),
+        // Validate avatar.
       '#upload_validators' => [
         'file_validate_extensions' => ['jpeg jpg png'],
         'file_validate_size' => [2100000],
@@ -79,6 +80,7 @@ class GuestBookForm extends FormBase {
     $form['sec-col']['image'] = [
       '#type' => 'managed_file',
       '#title' => $this->t('Image:'),
+        // Validate image.
       '#upload_validators' => [
         'file_validate_extensions' => ['jpeg jpg png'],
         'file_validate_size' => [5240000],
@@ -92,27 +94,36 @@ class GuestBookForm extends FormBase {
     $form['sec-col']['submit'] = [
       '#type' => 'submit',
       '#value' => (isset($val)) ? $this->t('Edit') : $this->t('Send'),
+        // Set ajax callback function.
       '#ajax' => [
         'callback' => '::submitAjax',
       ],
 
     ];
+    // Hidden feild which ocntaine feedback id to edit.
     $form['id'] = [
       '#type' => 'hidden',
       '#default_value' => (isset($val['id'])) ? $val['id'] : NULL,
-    ];
-    $form['edit'] = [
-      '#type' => 'hidden',
-      '#default_value' => (isset($val)) ? 'yes' : 'no',
     ];
     return $form;
   }
 
   /**
+   * Ajax callback function for submit.
    *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   JSON response object for AJAX requests.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function submitAjax(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
+    // Validate name field.
     if (strlen($form_state->getValue('name')) < 2 || strlen($form_state->getValue('name') > 100
               || strlen($form_state->getValue('name')) == 0)) {
       $response->addCommand(new MessageCommand(
@@ -121,6 +132,7 @@ class GuestBookForm extends FormBase {
             ['type' => 'error']
         ));
     }
+    // Validate email field.
     elseif (!filter_var($form_state->getValue('email'), FILTER_VALIDATE_EMAIL)
           || strlen($form_state->getValue('email')) == 0) {
       $response->addCommand(new MessageCommand(
@@ -136,6 +148,7 @@ class GuestBookForm extends FormBase {
             ['type' => 'error'],
         ));
     }
+    // Validate phone field.
     elseif (!preg_match('/^\d{10,12}/', $form_state->getValue('phone'))
           || strlen($form_state->getValue('email')) == 0) {
       $response->addCommand(new MessageCommand(
@@ -144,6 +157,7 @@ class GuestBookForm extends FormBase {
             ['type' => 'error'],
         ));
     }
+    // Validate message filed.
     elseif (strlen($form_state->getValue('message')) === 0) {
       $response->addCommand(new MessageCommand(
             $this->t('Please write message!'),
@@ -158,7 +172,9 @@ class GuestBookForm extends FormBase {
             ['type' => 'error']
         ));
     }
-    elseif ($form_state->getValue('edit') == "yes") {
+
+    // If fieild with id not null -> update data into database.
+    elseif ($form_state->getValue('id') != NULL) {
       $fields['name'] = $form_state->getValue('name');
       $fields['email'] = $form_state->getValue('email');
       $fields['phone'] = $form_state->getValue('phone');
@@ -167,6 +183,7 @@ class GuestBookForm extends FormBase {
       $avatar = $form_state->getValue('avatar');
       $image = $form_state->getValue('image');
 
+      // If field avatar not null load new avatar.
       if ($avatar != NULL) {
         $file = File::load($avatar[0]);
         $file->setPermanent();
@@ -176,6 +193,7 @@ class GuestBookForm extends FormBase {
         $fields['avatar'] = $url;
       }
 
+      // If field image not null load new image.
       if ($image != NULL) {
         $file = File::load($image[0]);
         $file->setPermanent();
@@ -185,11 +203,13 @@ class GuestBookForm extends FormBase {
         $fields['image'] = $url;
       }
 
+      // Update database.
       $connection = \Drupal::database()->update('guest_book');
       $connection->condition('id', $form_state->getValue('id'));
       $connection->fields($fields);
       $connection->execute();
 
+      // Output message about work.
       $response->addCommand(new MessageCommand(
             $this->t('Update done!'),
             NULL,
@@ -200,9 +220,13 @@ class GuestBookForm extends FormBase {
             '#error-message-edit',
             ['type' => 'status']
         ));
+
+      // Redirect on /guest_book page after update data.
       $url = Url::fromRoute("guest_book.main");
       $response->addCommand(new RedirectCommand($url->toString()));
     }
+
+    // Else add new content to database.
     else {
       $fields['name'] = $form_state->getValue('name');
       $fields['email'] = $form_state->getValue('email');
@@ -215,6 +239,7 @@ class GuestBookForm extends FormBase {
       $avatar = $form_state->getValue('avatar');
       $image = $form_state->getValue('image');
 
+      // If avatar field is null set default avatar image else save avaatar url.
       if ($avatar == NULL) {
         $fields['avatar'] = '/modules/custom/guest_book/images/default-avatar.png';
       }
@@ -227,6 +252,7 @@ class GuestBookForm extends FormBase {
         $fields['avatar'] = $url;
       }
 
+      // If image field is NULL set NULL else save image url.
       if ($image == NULL) {
         $fields['image'] = NULL;
       }
@@ -239,6 +265,7 @@ class GuestBookForm extends FormBase {
         $fields['image'] = $url;
       }
 
+      // Add new content to database.
       $connection = \Drupal::database();
       $connection->insert('guest_book')->fields($fields)->execute();
 
@@ -258,13 +285,13 @@ class GuestBookForm extends FormBase {
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
   }

@@ -12,7 +12,7 @@ guest_book.delete:
     _controller: '\Drupal\guest_book\Controller\GuestBookController::delete'
   requirements:
     _permission: 'access to edit guest_book data'
-    id: '^[0-9]+'
+    id: '^[\d]+'
 
 guest_book.edit:
   path: '/guest-book/edit/{id}'
@@ -20,5 +20,5 @@ guest_book.edit:
     _controller: '\Drupal\guest_book\Controller\GuestBookController::edit'
   requirements:
     _permission: 'access to edit guest_book data'
-    id: '^[0-9]+'
+    id: '^[\d]+'
 
