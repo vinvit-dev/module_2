@@ -9,54 +9,67 @@ use Drupal\Core\Ajax\MessageCommand;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Url;
 
-class GuestBookDeleteForm extends  FormBase
-{
-    public function getFormId()
-    {
-        return 'guest_book_delete_form';
-    }
+/**
+ *
+ */
+class GuestBookDeleteForm extends FormBase {
 
-    public function buildForm(array $form, FormStateInterface $form_state, $id = null)
-    {
-        $form['question'] = [
-            '#markup' => '<p class="delete-question">' . $this->t('You really want ot delete it?') . '</p>',
-        ];
-        $form['actions']['delete'] = [
-            '#type' => 'submit',
-            '#value' => $this->t("Delete"),
-            '#ajax' => [
-                'callback' => '::submitAjax'
-            ]
-        ];
-        $form['id'] = [
-            '#type' => 'hidden',
-            '#value' => $id,
-        ];
-        return $form;
-    }
+  /**
+   *
+   */
+  public function getFormId() {
+    return 'guest_book_delete_form';
+  }
 
-    public function submitAjax(array &$form, FormStateInterface $form_state)
-    {
-        $response = new AjaxResponse();
-        $id = $form_state->getValue('id');
-        $conn = \Drupal::database()->delete('guest_book');
-        $conn->condition('id', $id);
-        $conn->execute();
+  /**
+   *
+   */
+  public function buildForm(array $form, FormStateInterface $form_state, $id = NULL) {
+    $form['question'] = [
+      '#markup' => '<p class="delete-question">' . $this->t('You really want ot delete it?') . '</p>',
+    ];
+    $form['actions']['delete'] = [
+      '#type' => 'submit',
+      '#value' => $this->t("Delete"),
+      '#ajax' => [
+        'callback' => '::submitAjax',
+      ],
+    ];
+    $form['id'] = [
+      '#type' => 'hidden',
+      '#value' => $id,
+    ];
+    return $form;
+  }
 
-        $response->addCommand(new MessageCommand($this->t('Deleted')));
+  /**
+   *
+   */
+  public function submitAjax(array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+    $id = $form_state->getValue('id');
+    $conn = \Drupal::database()->delete('guest_book');
+    $conn->condition('id', $id);
+    $conn->execute();
 
-        $url = Url::fromRoute("guest_book.main");
-        $response->addCommand(new RedirectCommand($url->toString()));
+    $response->addCommand(new MessageCommand($this->t('Deleted')));
 
-        return $response;
-    }
+    $url = Url::fromRoute("guest_book.main");
+    $response->addCommand(new RedirectCommand($url->toString()));
 
-    public function validateForm(array &$form, FormStateInterface $form_state)
-    {
-    }
+    return $response;
+  }
 
-    public function submitForm(array &$form, FormStateInterface $form_state)
-    {
-    }
+  /**
+   *
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+  }
+
+  /**
+   *
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+  }
 
 }

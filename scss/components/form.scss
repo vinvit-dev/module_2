@@ -1,0 +1,11 @@
+.guest-book-form {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 25px;
+    border: 1px solid #bfbfbf;
+    border-radius: 3px;
+    padding: 20px;
+   .form-wrapper {
+        width: 49%;
+    }
+}

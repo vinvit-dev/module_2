@@ -1,0 +1,82 @@
+.guest-book_feedback-list a, .guest-book_feedback-list a:hover, .guest-book_feedback-list a:active, .guest-book_feedback-list a:focus {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  outline: none;
+}
+.guest-book_feedback-list .feedback-title {
+  display: block;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 24px;
+}
+.guest-book_feedback-list .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.guest-book_feedback-list .feedback {
+  border: 1px solid #bfbfbf;
+  border-radius: 3px;
+  margin: 25px 10px;
+  flex: 0 0 49%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.guest-book_feedback-list .feedback_user {
+  display: flex;
+  align-items: center;
+}
+.guest-book_feedback-list .feedback_user img {
+  height: 75px;
+  width: 75px;
+  border-radius: 2px 0 0 0;
+  object-fit: cover;
+}
+.guest-book_feedback-list .feedback_user .name {
+  padding: 15px 10px;
+  font-size: 16px;
+  border-left: 1px solid #bfbfbf;
+  margin: 10px;
+}
+.guest-book_feedback-list .feedback .date {
+  padding: 15px 10px;
+  border-left: 1px solid #bfbfbf;
+}
+.guest-book_feedback-list .feedback_message {
+  border-bottom: 1px solid #bfbfbf;
+  border-top: 1px solid #bfbfbf;
+  padding: 15px;
+  flex: 1 1 100%;
+  display: flex;
+}
+.guest-book_feedback-list .feedback_message img {
+  flex: 0 0 49%;
+}
+.guest-book_feedback-list .feedback_message .massage {
+  flex: 0 0 49%;
+  padding: 0 20px 0 0;
+}
+.guest-book_feedback-list .feedback_contact {
+  display: flex;
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+.guest-book_feedback-list .feedback_contact > div {
+  border-right: 1px solid #bfbfbf;
+  padding: 5px 10px;
+}
+.guest-book_feedback-list .feedback_buttons {
+  display: flex;
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+.guest-book_feedback-list .feedback_buttons > a {
+  border-left: 1px solid #bfbfbf;
+  padding: 5px 10px;
+}
+
+/*# sourceMappingURL=feedback.css.map */

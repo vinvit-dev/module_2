@@ -1,0 +1,10 @@
+.guest-book-delete-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.guest-book-delete-form .delete-question {
+  margin: 0;
+}
+
+/*# sourceMappingURL=modalDialog.css.map */

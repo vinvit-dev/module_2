@@ -1,0 +1,83 @@
+.guest-book_feedback-list {
+    a , a:hover, a:active, a:focus{
+        border: none;
+        margin: 0;
+        padding: 0;
+        display: block;
+        outline: none;
+    }
+    .feedback-title {
+        display: block;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 30px;
+        font-size: 24px;
+    }
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .feedback {
+        border: 1px solid #bfbfbf;
+        border-radius: 3px;
+        margin: 25px 10px;
+        flex: 0 0 49%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        &_user {
+            display: flex;
+            align-items: center;
+            img {
+                height: 75px;
+                width: 75px;
+                border-radius: 2px 0 0 0;
+                object-fit: cover;
+            }
+            .name {
+                padding: 15px 10px;
+                font-size: 16px;
+                border-left: 1px solid #bfbfbf;
+                margin: 10px;
+            }
+        }
+        .date {
+            padding: 15px 10px;
+            border-left: 1px solid #bfbfbf;
+        }
+        &_message {
+            border-bottom: 1px solid #bfbfbf;
+            border-top: 1px solid #bfbfbf;
+            padding: 15px;
+            flex: 1 1 100%;
+            display: flex;
+            img {
+                flex: 0 0 49%;
+            }
+            .massage {
+                flex: 0 0 49%;
+                padding: 0 20px 0 0;
+            }
+        }
+        &_contact {
+            display: flex;
+            padding: 5px 10px;
+            margin: 5px 0;
+            & > div {
+                border-right: 1px solid #bfbfbf;
+                padding: 5px 10px;
+            }
+
+        }
+        &_buttons {
+            display: flex;
+            padding: 5px 10px;
+            margin: 5px 0;
+            & > a {
+                border-left: 1px solid #bfbfbf;
+                padding: 5px 10px;
+            }
+        }
+    }
+}
